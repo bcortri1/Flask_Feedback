@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <a href="/register" ><button class="btn btn-sm btn-success" type="button">Register</button></a>
+</nav>
+{% for msg in get_flashed_messages() %}
+<p>{{ msg }}</p>
+{% endfor %}
+
+<div class="container">
+    <div class="card card-body mx-auto bg-light m-3">
+        <h2>Login</h2><br>
+        <form id="login-form" method="POST">
+            {{ form.hidden_tag() }}
+            
+            {% for field in form if field.widget.input_type != 'hidden' %}
+
+            <div class="form-group">
+                {{ field.label(class_ = "form-label")}}
+                {{ field(class_="form-control") }}
+
+                {% for error in field.errors %}
+                <small class="form-text text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+
+            {% endfor %}
+            <a href="/"><button class="btn btn-danger" type="button">Cancel</button><a>
+            <button class="btn btn-success" type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

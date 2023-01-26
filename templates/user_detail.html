@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <a href="/logout" ><button class=" btn btn-sm btn-danger" type="button">Logout</button></a>
+</nav>
+
+{% for msg in get_flashed_messages() %}
+<p>{{ msg }}</p>
+{% endfor %}
+<div class="container">
+    <div class = "card bg-light m-3 mx-auto" style = "width: 30rem;">
+        <div class="card-body m-2">
+            
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="card-title font-weight-bold">Account Info</h3>
+                    </div>
+                    <div class="col">
+                        <form action="/users/{{user.username}}/delete" method="post">
+                            {{ form.hidden_tag() }}
+                            <button class="btn btn-outline-danger float-right">Delete Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="col font-weight-bold">Username: </div>
+                <div class="col">{{user.username}}</div>
+            </div>
+            <div class="row m-1">
+                <div class="col font-weight-bold">Email: </div>
+                <div class="col">{{user.email}}</div>
+            </div>
+            <div class="row m-1">
+                <div class="col font-weight-bold">First Name: </div>
+                <div class="col">{{user.first_name}}</div>
+            </div>
+            <div class="row m-1">
+                <div class="col font-weight-bold">Last Name: </div>
+                <div class="col">{{user.last_name}}</div>
+            </div>
+
+        </div>
+    </div>
+    <div class ="mx-auto" style = "width: 30rem;">
+        <a class="btn btn-info" style = "width: 100%;" href="/users/{{user.username}}/feedback/add">Add Feedback</a>
+    </div>
+    {% for feedback in user.feedbacks %}
+        <div class = "card bg-light m-3 mx-auto" style = "width: 30rem;">
+            <div class="card-body">
+                <div class="row m-1">
+                    <div class="col font-weight-bold">
+                        <a href="/feedback/{{feedback.id}}/update">{{feedback.title}}</a>
+                    </div>
+                    <div class="col font-weight-bold">
+                        <form action="/feedback/{{feedback.id}}/delete" method="post">
+                            <button class="btn btn-danger float-right">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
